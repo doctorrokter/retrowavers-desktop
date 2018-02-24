@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>assets/fonts/NEWTOW_I.ttf</file>
+        <file>assets/fonts/NEWTOW_I.woff</file>
+        <file>assets/images/blur.jpg</file>
+        <file>assets/images/cassette-body.png</file>
+        <file>assets/images/cogwheel.png</file>
+        <file>assets/images/cover.jpg</file>
+        <file>assets/images/eq.png</file>
+        <file>assets/images/ic_next.png</file>
+        <file>assets/images/ic_pause.png</file>
+        <file>assets/images/ic_play.png</file>
+        <file>assets/images/ic_previous.png</file>
+        <file>assets/images/list.png</file>
+        <file>assets/images/logo.png</file>
+        <file>assets/images/palms-bg.png</file>
+        <file>components/Controls.qml</file>
+        <file>components/TrackInfo.qml</file>
+        <file>components/Cassette.qml</file>
+    </qresource>
+</RCC>
