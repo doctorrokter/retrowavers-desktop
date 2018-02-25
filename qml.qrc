@@ -19,5 +19,7 @@
         <file>components/Controls.qml</file>
         <file>components/TrackInfo.qml</file>
         <file>components/Cassette.qml</file>
+        <file>components/RetroFont.qml</file>
+        <file>components/TrackItem.qml</file>
     </qresource>
 </RCC>

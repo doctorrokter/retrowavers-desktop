@@ -7,9 +7,8 @@ Column {
     property int duration: 0
     property int currentPosition: 0
 
-    FontLoader {
+    RetroFont {
         id: newtownFont
-        source: "../assets/fonts/NEWTOW_I.ttf"
     }
 
     anchors.horizontalCenter: parent.horizontalCenter

@@ -2,6 +2,7 @@ import QtQuick 2.10
 import QtQuick.Controls 2.3
 import QtGraphicalEffects 1.0
 import QtMultimedia 5.9
+import QtQml.Models 2.3
 import "components"
 
 ApplicationWindow {
@@ -83,6 +84,72 @@ ApplicationWindow {
             title: !isActiveTrack() ? "" : _tracksService.active.title
             duration: !isActiveTrack() ? 0 : _tracksService.active.duration
         }
+    }
+
+    Column {
+
+        Item {
+            id: listMenu
+            x: 15
+            y: 15
+
+            Rectangle {
+                id: listMenuBg
+                width: 100
+                height: 100
+                radius: 15
+                color: "black"
+                opacity: 0.3
+            }
+
+            Image {
+                id: name
+                x: 10
+                y: 10
+                width: 80
+                height: 80
+                source: "assets/images/list.png"
+            }
+        }
+
+        Item {
+            id: playlist
+            x: 15
+            y: 130
+
+            width: window.width / 2.5
+            height: (window.height / 1.3) - listMenuBg.height
+
+            Rectangle {
+                anchors.fill: parent
+                radius: 15
+                color: "black"
+                opacity: 0.3
+            }
+
+            ListView {
+                id: listView
+                width: parent.width - 20
+                height: parent.height - 20
+                leftMargin: 10
+                topMargin: 10
+                rightMargin: 10
+                bottomMargin: 10
+
+                flickableDirection: Flickable.VerticalFlick
+                boundsBehavior: Flickable.StopAtBounds
+                interactive: true
+                ScrollBar.vertical: ScrollBar {}
+
+                model: _tracksService.tracks
+
+                delegate: TrackItem {
+                    title: modelData.title
+                    duration: modelData.duration
+                }
+            }
+        }
+
     }
 
     function isActiveTrack() {
