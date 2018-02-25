@@ -24,6 +24,10 @@ ApplicationWindow {
         onPositionChanged: {
             trackInfo.currentPosition = position;
         }
+
+        onStopped: {
+            _tracksController.next();
+        }
     }
 
     Image {
@@ -87,36 +91,47 @@ ApplicationWindow {
     }
 
     Column {
+        x: 15
+        y: 15
+        spacing: 15
 
         Item {
             id: listMenu
-            x: 15
-            y: 15
+            width: 100
+            height: 100
 
             Rectangle {
                 id: listMenuBg
                 width: 100
-                height: 100
-                radius: 15
+                anchors.fill: parent
                 color: "black"
+                radius: 15
                 opacity: 0.3
             }
 
             Image {
                 id: name
-                x: 10
-                y: 10
                 width: 80
                 height: 80
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
                 source: "assets/images/list.png"
+
+                MouseArea {
+                    width: parent.width
+                    height: parent.height
+
+                    onClicked: {
+                        playlist.visible = !playlist.visible;
+                    }
+                }
             }
         }
 
         Item {
             id: playlist
-            x: 15
-            y: 130
 
+            visible : false
             width: window.width / 2.5
             height: (window.height / 1.3) - listMenuBg.height
 
@@ -131,10 +146,19 @@ ApplicationWindow {
                 id: listView
                 width: parent.width - 20
                 height: parent.height - 20
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
                 leftMargin: 10
                 topMargin: 10
                 rightMargin: 10
                 bottomMargin: 10
+                clip: true
+                highlight: Rectangle {
+                    color: "#FF3333"
+                    height: 50
+                    opacity: 0.5
+                    radius: 15
+                }
 
                 flickableDirection: Flickable.VerticalFlick
                 boundsBehavior: Flickable.StopAtBounds
@@ -144,8 +168,19 @@ ApplicationWindow {
                 model: _tracksService.tracks
 
                 delegate: TrackItem {
+                    id: trackItem
                     title: modelData.title
                     duration: modelData.duration
+
+                    MouseArea {
+                        width: parent.width
+                        height: parent.height
+
+                        onClicked: {
+                            trackItem.ListView.view.currentIndex = index;
+                            _tracksController.play(modelData);
+                        }
+                    }
                 }
             }
         }
@@ -180,6 +215,7 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        window.showMaximized();
         _tracksService.activeChanged.connect(window.changeTrack);
         _api.loaded.connect(startTrack);
         _api.load();

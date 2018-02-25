@@ -16,7 +16,7 @@ Item {
         font.family: newtownFont.name
         color: "white"
         font.pixelSize: 20
-//        leftPadding: 5
+        leftPadding: 5
     }
 
     Text {
@@ -29,7 +29,7 @@ Item {
         font.family: newtownFont.name
         color: "white"
         font.pixelSize: 20
-//        rightPadding: 5
+        rightPadding: 5
     }
 
     RetroFont {
