@@ -23,10 +23,9 @@ ApplicationWindow {
 
         onPositionChanged: {
             trackInfo.currentPosition = position;
-        }
-
-        onStopped: {
-            _tracksController.next();
+            if (position !== 0 && position === player.duration) {
+                window.next();
+            }
         }
     }
 
@@ -165,6 +164,7 @@ ApplicationWindow {
                 interactive: true
                 ScrollBar.vertical: ScrollBar {}
 
+                currentIndex: _tracksController.index
                 model: _tracksService.tracks
 
                 delegate: TrackItem {
@@ -173,18 +173,16 @@ ApplicationWindow {
                     duration: modelData.duration
 
                     MouseArea {
-                        width: parent.width
-                        height: parent.height
+                        width: trackItem.width
+                        height: trackItem.height
 
                         onClicked: {
-                            trackItem.ListView.view.currentIndex = index;
                             _tracksController.play(modelData);
                         }
                     }
                 }
             }
         }
-
     }
 
     function isActiveTrack() {
@@ -192,10 +190,8 @@ ApplicationWindow {
     }
 
     function startTrack() {
-        if (!isActiveTrack()) {
-            _tracksController.next();
+            window.next();
             window.playing = true;
-        }
     }
 
     function changeTrack(track) {
@@ -203,6 +199,12 @@ ApplicationWindow {
         cover.source = track.artworkUrl;
         cassette.imageSource = track.artworkUrl;
         player.play();
+    }
+
+    function next() {
+        if (!_tracksController.next()) {
+            _api.load();
+        }
     }
 
     onPlayingChanged: {

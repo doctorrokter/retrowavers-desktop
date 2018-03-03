@@ -11,6 +11,7 @@
 class TracksController : public QObject {
     Q_OBJECT
     Q_PROPERTY(int playerMode READ getPlayerMode WRITE setPlayerMode NOTIFY playerModeChanged)
+    Q_PROPERTY(int index READ getIndex NOTIFY indexChanged)
 public:
     enum PlayerMode {
         Playlist = 0,
@@ -31,6 +32,8 @@ public:
     Q_INVOKABLE int getPlayerMode() const;
     Q_INVOKABLE void setPlayerMode(const int& playerMode);
 
+    const int& getIndex() const;
+
 signals:
     void played(const QVariantMap& track);
     void liked(const QString& id);
@@ -38,6 +41,7 @@ signals:
     void downloadProgress(const QString& id, qint64 sent, qint64 total);
     void playerModeChanged(const int& playerMode);
     void favouriteTrackRemoved(const QString& id);
+    void indexChanged(const int& index);
 
 private slots:
     void onDownload();

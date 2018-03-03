@@ -59,6 +59,7 @@ bool TracksController::play(const QVariantMap& track) {
     if (pTrack != nullptr) {
         m_pTracksService->setActive(pTrack);
         emit played(pTrack->toMap());
+        emit indexChanged(m_index);
     }
 
     return true;
@@ -188,3 +189,6 @@ void TracksController::onDownloadProgress(qint64 sent, qint64 total) {
     emit downloadProgress(trackId, sent, total);
 }
 
+const int& TracksController::getIndex() const {
+    return m_index;
+}
